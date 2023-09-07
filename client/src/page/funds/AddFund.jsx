@@ -28,7 +28,7 @@ export function AddFund() {
         const formData = new FormData();
         formData.append('fund_image', e.target.files[0]);
 
-        fetch('http://localhost:3001/api/upload/car', {
+        fetch('http://localhost:3001/api/upload/fund', {
             method: 'POST',
             body: formData,
         })
@@ -60,13 +60,13 @@ export function AddFund() {
     }
 
     function fundTextValidity() {
-        const minSize = 100;
+        const minSize = 10;
 
-        if (title === '') {
+        if (fundText === '') {
             return 'Reikalingas tekstas.';
         }
 
-        if (title.length < minSize) {
+        if (fundText.length < minSize) {
             return `Per trumpas aprasymas. Min leidziama ${minSize} simboliai.`;
         }
 
@@ -154,7 +154,7 @@ export function AddFund() {
                 </div>
                 <form onSubmit={submitHandler} className="col-12 col-sm-8">
                     <div className="row mb-3">
-                        <img src={image ? image : defaultImage} alt="Car" className="col-12 p-0 mb-3"
+                        <img src={image ? image : defaultImage} alt="Fund" className="col-12 p-0 mb-3"
                             style={image ? imageStyle : defaultImageStyle} />
                         <label className="col-12 col-md-4 form-label" htmlFor="image">Image</label>
                         <div className="col-12 col-md-8">

@@ -9,6 +9,7 @@ import { UserLayout } from './layout/UserLayout';
 import { Dashboard } from './page/dashboard/Dashboard';
 import { Funds } from './page/funds/Funds';
 import { AddFund } from './page/funds/AddFund';
+import { FundPage } from './components/funds-table/FundPage';
 
 
 // import { Register } from './pages/Register';
@@ -36,6 +37,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/funds' element={<Funds />} />
               <Route path='/funds/new' element={<AddFund />} />
+              <Route path='/funds/view/:id' element={<FundPage />} />
 
               {/* <Route path='/movies' element={<Movies />} />
               <Route path='/movies/add' element={<AddMovie />} /> */}

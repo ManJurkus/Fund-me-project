@@ -1,12 +1,10 @@
-// import { Hero } from "../components/Hero";
-// import { Movies } from "../components/Movies";
+import { PublicFundsTable } from "../components/funds-table/PublicFundsTable";
 
 export function Home() {
     return (
         <div>
-            Home page
-            {/* <Hero />
-            <Movies /> */}
+            <PublicFundsTable />
+           
         </div>
     );
 }

@@ -23,6 +23,8 @@ async function setupDb() {
         await rolesTable(connection);
         await usersTable(connection);
         await tokensTable(connection);
+        await blockTable(connection);
+        await fundsTable(connection);
         // await carTypesTable(connection);
         // await steeringWheelTable(connection);
         // await carsTable(connection);
@@ -85,6 +87,45 @@ async function rolesTable(db) {
                         role varchar(10) NOT NULL,
                         PRIMARY KEY (id)
                     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4`;
+        await db.execute(sql);
+    } catch (error) {
+        console.log('Nepavyko sukurti "roles" lenteles');
+        console.log(error);
+        throw error;
+    }
+}
+
+async function blockTable(db) {
+    try {
+        const sql = `CREATE TABLE block (
+            id int(2) NOT NULL AUTO_INCREMENT,
+            status varchar(10) NOT NULL,
+            PRIMARY KEY (id)
+          ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`;
+        await db.execute(sql);
+    } catch (error) {
+        console.log('Nepavyko sukurti "roles" lenteles');
+        console.log(error);
+        throw error;
+    }
+}
+
+async function fundsTable(db) {
+    try {
+        const sql = `CREATE TABLE funds (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            user_id int(10) NOT NULL,
+            title varchar(200) NOT NULL,
+            fundText varchar(500) NOT NULL,
+            fundSum int(10) NOT NULL,
+            is_blocked_fund int(2) NOT NULL DEFAULT 1,
+            image varchar(100) NOT NULL,
+            PRIMARY KEY (id),
+            KEY user_id (user_id),
+            KEY is_blocked_fund (is_blocked_fund),
+            CONSTRAINT funds_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (id),
+            CONSTRAINT funds_ibfk_2 FOREIGN KEY (is_blocked_fund) REFERENCES block (id)
+          ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`;
         await db.execute(sql);
     } catch (error) {
         console.log('Nepavyko sukurti "roles" lenteles');

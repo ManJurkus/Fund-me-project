@@ -1,4 +1,5 @@
 import { Title } from "../../components/Title";
+import { FundsTable } from "../../components/funds-table/FundsTable";
 
 export function UserFunds() {
 
@@ -27,7 +28,7 @@ export function UserFunds() {
                     </div>
                 </div> */}
                 <div className="col-12">
-                    {/* <CarsTable filterCarType={selectedCarType} filterTitle={title.toLowerCase()} /> */}
+                    <FundsTable/>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 
 import { Title } from "../../components/Title";
+import { FundsTable } from "../../components/funds-table/FundsTable";
 
 
 export function AdminFunds() {
@@ -12,7 +13,7 @@ export function AdminFunds() {
                 </div>
 
                 <div className="col-12">
-                    {/* <CarsTable /> */}
+                    <FundsTable />
                 </div>
             </div>
         </div>

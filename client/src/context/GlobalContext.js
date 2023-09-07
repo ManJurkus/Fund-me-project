@@ -11,11 +11,11 @@ export const initialContext = {
     updateEmail: () => { },
     // carTypes: [],
     // addCarType: () => { },
-    // deleteCarType: () => { },
-    // changeCarType: () => { },
+    deleteFund: () => { },
+    changeFundStatus: () => { },
     // updateCarTypes: () => { },
-    // cars: [],
-    // updateCars: () => { },
+    funds: [],
+    updateFunds: () => { },
     // steeringWheelSides: [],
 };
 
@@ -27,8 +27,10 @@ export const ContextWrapper = (props) => {
     const [username, setUsername] = useState(initialContext.username);
     const [email, setEmail] = useState(initialContext.email);
     // const [carTypes, setCarTypes] = useState(initialContext.carTypes);
-    // const [cars, setCars] = useState(initialContext.cars);
+    const [funds, setFunds] = useState(initialContext.funds);
     // const [steeringWheelSides, setSteeringWheelSides] = useState(initialContext.steeringWheelSides);
+
+    // console.log(funds);
 
     // User busena: role, email, ....
     useEffect(() => {
@@ -116,17 +118,22 @@ export const ContextWrapper = (props) => {
     //     setCarTypes(pre => [...pre, carType]);
     // }
 
-    // function deleteCarType(carType) {
-    //     setCarTypes(pre => pre.filter(title => title !== carType));
-    // }
+    function deleteFund(fund) {
+        setFunds(pre => pre.filter(title => title !== fund));
+    }
 
-    // function changeCarType(oldCarType, newCarType) {
-    //     setCarTypes(pre => pre.map(title => title === oldCarType ? newCarType : title));
-    // }
+    function changeFundStatus(fundId, newStatus) {
+        console.log('keiciamas');
+        console.log(fundId, newStatus);
+        setFunds(pre => pre.map(fund =>
+            fund.id === fundId ? { ...fund, is_blocked_fund: newStatus } : fund
+        ));
+        console.log(funds);
+    }
 
-    // function updateCars(cars) {
-    //     setCars(cars);
-    // }
+    function updateFunds(funds) {
+        setFunds(funds);
+    }
 
     const value = {
         loginStatus,
@@ -139,11 +146,12 @@ export const ContextWrapper = (props) => {
         updateEmail,
         // carTypes,
         // addCarType,
-        // deleteCarType,
+        deleteFund,
         // changeCarType,
         // updateCarTypes,
-        // cars,
-        // updateCars,
+        funds,
+        updateFunds,
+        changeFundStatus,
         // steeringWheelSides,
     };
 
