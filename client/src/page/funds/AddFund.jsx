@@ -8,7 +8,7 @@ import { Forbiden } from "../Forbiden";
 
 export function AddFund() {
     const navigate = useNavigate();
-    const currentYear = new Date().getFullYear();
+    // const currentYear = new Date().getFullYear();
     const { role } = useContext(GlobalContext);
 
     const [image, setImage] = useState('');

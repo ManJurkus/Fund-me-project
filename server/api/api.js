@@ -5,6 +5,7 @@ import { login } from './login.js';
 import { logout } from './logout.js';
 import { funds } from './funds.js';
 import { upload } from './upload.js';
+import { donation } from './donation.js';
 
 
 export const api = express.Router();
@@ -20,3 +21,4 @@ api.use('/login', login);
 api.use('/logout', logout);
 api.use('/funds', funds);
 api.use('/upload', upload);
+api.use('/donation', donation);

@@ -1,59 +1,52 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import {  Link, useNavigate } from 'react-router-dom';
-import { RegisterModal } from './RegisterModal';
-import { GlobalContext } from '../context/GlobalContext';
 
-export function DonateModal() {
-    const { updateEmail, updateFullname, updateLoginStatus, updateRole } = useContext(GlobalContext);
-    const navigate = useNavigate();
-
+export function DonateModal({fundId}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        console.log("handleShow called");
+        setShow(true);
+      };
 
-    const [email, setEmail] = useState('');
-    const [emailErr, setEmailErr] = useState('');
-    const [password, setPasword] = useState('');
-    const [passwordErr, setPasswordErr] = useState('');
+    const [name, setName] = useState('');
+    const [nameErr, setNameErr] = useState('');
+    const [donation, setDonation] = useState(0);
+    const [donationErr, setDonationErr] = useState('');
     const [formErr, setFormErr] = useState('');
 
 
-    function updateEmailLogin(e){
-        setEmail(e.target.value);
-    }
-
-    function updatePasword(e){
-        setPasword(e.target.value);
+    function updateName(e){
+        setName(e.target.value);
     }
 
 
-    function isValidEmail(e) {
+    function isValidName(e) {
         const { value } = e.target;
-        const minSize = 6;
+        const minSize = 5;
 
         if (value.length < minSize) {
-            return setEmailErr(`Email per trumpas. Minimum ${minSize} simboliu.`);
+            return setNameErr(`Name per trumpas. Minimum ${minSize} simboliu.`);
         }
-        return setEmailErr('');
+        return setNameErr('');
     }
 
-    function isValidPassword(e) {
-        const { value } = e.target;
-        const minSize = 6;
+    // function isValidDonation(e) {
+    //     const { value } = e.target;
+    //     const minSize = 1;
 
-        if (value.length < minSize) {
-            return setPasswordErr(`Pass per trumpas. Minimum ${minSize} simboliu.`);
-        }
-        return setPasswordErr('');
-    }
+    //     if (value.length < minSize) {
+    //         return setDonationErr(`Minimum donation ${minSize} €.`);
+    //     }
+    //     return setDonationErr('');
+    // }
     
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        fetch('http://localhost:3001/api/login', {
+        fetch('http://localhost:3001/api/donation', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,28 +54,22 @@ export function DonateModal() {
             },
             credentials: 'include',
             body: JSON.stringify({
-                email,
-                password,
+                fundId,
+                name,
+                donation,
             }),
         }).then(res => res.json())
             .then(data => {
-                if (data.status === 'err') {
-                    setFormErr(data.msg);
-                }
-                if (data.status === 'ok') {
-                        updateLoginStatus(true);
-                        updateEmail(data.user.email);
-                        updateFullname(data.user.fullname);
-                        updateRole(data.user.role);
-                        navigate('/dashboard');
-                }
+                console.log(data);
+
+                
             })
             .catch(err => console.error(err));
     }
 
   return (
     <>
-      <button onClick={handleShow} className="btn btn-outline-success btn-round me-2" >Login</button>
+      <button type="button" onClick={handleShow} className="btn-public btn-primary display-4" >Donate</button>
 
       <Modal
         show={show}
@@ -91,7 +78,7 @@ export function DonateModal() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
+          <Modal.Title>Donate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         {
@@ -104,22 +91,22 @@ export function DonateModal() {
                 }
         <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
-                        <input onChange={updateEmailLogin} onBlur={isValidEmail} value={email} type="email" id="email"
-                            className={`form-control ${emailErr ? 'is-invalid' : ''} `} />
-                        <label htmlFor="email">Email address</label>
-                        <div className="invalid-feedback">{emailErr}</div>
+                        <input onChange={updateName} onBlur={isValidName} value={name} type="text" id="name"
+                            className={`form-control ${nameErr ? 'is-invalid' : ''} `} />
+                        <label htmlFor="email">Your name</label>
+                        <div className="invalid-feedback">{nameErr}</div>
                     </div>
                     <div className="form-floating mb-3">
-                        <input onChange={updatePasword} onBlur={isValidPassword} value={password} type="password" id="password" 
-                            className={`form-control ${passwordErr ? 'is-invalid' : ''} `}/>
-                        <label htmlFor="password">Password</label>
-                        <div className="invalid-feedback">{passwordErr}</div>
+                        <input onChange={e => setDonation(+e.target.value)} value={donation}  type="number"
+                                    className={`form-control ${donationErr ? 'is-invalid' : ''}`} id="donation" min={0} max={1_000_000} step={1} />
+                        <label htmlFor="email">Your donation</label>
+                        <span className="input-group-text">EUR</span>
+                        <div className="invalid-feedback">{donationErr}</div>
                     </div>
-                    <button className="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Login</button>
+                    <button className="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Donate</button>
                 </form>
         </Modal.Body>
         <Modal.Footer>
-          <RegisterModal />
         </Modal.Footer>
       </Modal>
     </>

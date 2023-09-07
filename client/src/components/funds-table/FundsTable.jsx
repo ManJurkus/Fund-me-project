@@ -95,7 +95,7 @@ export function FundsTable() {
                                     </td>
                                     <td>{fund.title}</td>
                                     <td>{fund.fundSum}</td>
-                                    <td className="d-flex gap-2 justify-content-end">
+                                    <td >
                                         {
                                             fund.is_blocked_fund === 1 ? (
                                                 <div className="badge text-bg-warning rounded-pill">Pending</div>
