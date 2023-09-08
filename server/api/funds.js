@@ -116,8 +116,6 @@ funds.put('/:fundId', async (req, res) => {
 funds.get('/', async (req, res) => {
     const role = req.user.role;
     let selectQuery = '';
-    console.log(role);
-
 
     if (role === 'admin') {
         selectQuery = `SELECT * FROM funds;`;

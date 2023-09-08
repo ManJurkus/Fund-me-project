@@ -12,12 +12,13 @@ export function FundPage() {
     const { id } = useParams();
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/funds', {
+        fetch('http://localhost:3001/api/fundsPublic', {
             method: 'GET',
             credentials: 'include',
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 const filteredFund = data.list.filter(fund => fund.id === parseInt(id, 10));
                 if (filteredFund.length === 1) {
                     setExactFund(filteredFund[0]);

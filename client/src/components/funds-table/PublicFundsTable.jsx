@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { Link } from 'react-router-dom';
 import './PublicFundsTable.css';
@@ -6,6 +6,27 @@ import defaultImage from '../../assets/preview.png';
 
 export function PublicFundsTable() {
     const { fundsPublic, updateFundsPublic } = useContext(GlobalContext);
+    const [fundReceived, setFundReceived ]  = useState([]);
+
+    console.log(fundReceived);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/api/fundReceived/', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.status === 'ok') {
+                    setFundReceived(data.list)
+                }
+            })
+            .catch(console.error);
+    }, []);
 
     useEffect(() => {
         fetch('http://localhost:3001/api/fundsPublic/', {
@@ -29,32 +50,37 @@ export function PublicFundsTable() {
         <div className="container">
             <div className="row">
                 {
-                    fundsPublic
-                    .filter(fund => fund.is_blocked_fund !== 3)
+                    fundReceived
+                    .filter(fund => fund.fund_block !== 3)
                     .map((fund, index) =>(
-                        <div key={fund.title + index} className="card p-3 col-12 col-md-6 col-lg-4">
+                        <div key={fund.fund_title + index} className="card p-3 col-12 col-md-6 col-lg-4">
                     <div className="card-wrapper">
                         <div className="card-img">
-                            <img src={fund.image ? fund.image : defaultImage } alt="Fund" />
+                            <img src={fund.fund_image ? fund.fund_image : defaultImage } alt="Fund" />
                         </div>
                         <div className="card-box"> 
                             <h4 className="card-title mbr-fonts-style mbr-bold align-center display-5">
-                                {fund.title}
+                                {fund.fund_title}
                             </h4>
                            <div className="card-underline align-center">
                                <div className="line"></div>
                            </div>
                             <p className="mbr-text mbr-fonts-style align-center display-7">
-                                {fund.fundText}
+                                {fund.fund_text}
                             </p>
                             <p className="mbr-text mbr-fonts-style align-center display-7">
-                                    Donation goal: {fund.fundSum} €
+                                    Donation goal: {fund.fund_goal} €
                             </p>
                             <div className="progress m-2">
-                                <div className="progress-bar" role="progressbar" style={{width: '10%'}} >10%</div>
+                                <div className="progress-bar" role="progressbar" style={{
+                                    width: `${(parseFloat(fund.total_donation) / parseFloat(fund.fund_goal)) * 100}%`,
+                                }}>
+                                {`${(
+                                (parseFloat(fund.total_donation) / parseFloat(fund.fund_goal)) * 100).toFixed(2)}%`}
+                            </div>
                             </div>
                             <p className="mbr-text mbr-fonts-style align-center display-7">
-                                Donation received : 50 €
+                                Donation received : {fund.total_donation ? fund.total_donation : 0} €
                             </p>
                         </div>
                         <div className="mbr-section-btn align-center">
