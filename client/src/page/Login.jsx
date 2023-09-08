@@ -47,8 +47,7 @@ export function Login() {
                 password: pass,
             }),
         }).then(res => res.json())
-            .then(data => {
-                console.log(data);
+            .then(data => {;
                 if (data.status === 'err') {
                     setFormErr(data.msg);
                 }

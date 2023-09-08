@@ -1,11 +1,26 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../context/GlobalContext';
 
 export function FundsTable() {
-    const { role, funds, deleteFund, changeFundStatus } = useContext(GlobalContext);
+    const { role, funds, updateFunds, deleteFund, changeFundStatus } = useContext(GlobalContext);
 
-
+    useEffect(() => {
+        fetch('http://localhost:3001/api/funds/', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    updateFunds(data.list);
+                }
+            })
+            .catch(console.error);
+    }, []);
 
     function deleteFundHandler(title) {
         fetch('http://localhost:3001/api/funds/' + title, {
@@ -43,7 +58,6 @@ export function FundsTable() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.status === 'ok') 
                 {
                     changeFundStatus(data.info.fundId, data.info.newStatus )

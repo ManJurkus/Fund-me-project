@@ -16,6 +16,8 @@ export const initialContext = {
     // updateCarTypes: () => { },
     funds: [],
     updateFunds: () => { },
+    fundsPublic: [],
+    upadateFundsPublic: () => { },
     // steeringWheelSides: [],
 };
 
@@ -28,6 +30,7 @@ export const ContextWrapper = (props) => {
     const [email, setEmail] = useState(initialContext.email);
     // const [carTypes, setCarTypes] = useState(initialContext.carTypes);
     const [funds, setFunds] = useState(initialContext.funds);
+    const [fundsPublic, setFundsPublic] = useState(initialContext.fundsPublic);
     // const [steeringWheelSides, setSteeringWheelSides] = useState(initialContext.steeringWheelSides);
 
     // console.log(funds);
@@ -125,11 +128,14 @@ export const ContextWrapper = (props) => {
         setFunds(pre => pre.map(fund =>
             fund.id === fundId ? { ...fund, is_blocked_fund: newStatus } : fund
         ));
-        console.log(funds);
     }
 
     function updateFunds(funds) {
         setFunds(funds);
+    }
+
+    function updateFundsPublic(funds) {
+        setFundsPublic(funds);
     }
 
     const value = {
@@ -149,6 +155,8 @@ export const ContextWrapper = (props) => {
         funds,
         updateFunds,
         changeFundStatus,
+        fundsPublic,
+        updateFundsPublic,
         // steeringWheelSides,
     };
 

@@ -5,10 +5,10 @@ import './PublicFundsTable.css';
 import defaultImage from '../../assets/preview.png';
 
 export function PublicFundsTable() {
-    const { funds, updateFunds } = useContext(GlobalContext);
+    const { fundsPublic, updateFundsPublic } = useContext(GlobalContext);
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/funds/', {
+        fetch('http://localhost:3001/api/fundsPublic/', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -18,8 +18,7 @@ export function PublicFundsTable() {
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'ok') {
-                    console.log(data.list);
-                    updateFunds(data.list);
+                    updateFundsPublic(data.list);
                 }
             })
             .catch(console.error);
@@ -30,7 +29,7 @@ export function PublicFundsTable() {
         <div className="container">
             <div className="row">
                 {
-                    funds
+                    fundsPublic
                     .filter(fund => fund.is_blocked_fund !== 3)
                     .map((fund, index) =>(
                         <div key={fund.title + index} className="card p-3 col-12 col-md-6 col-lg-4">

@@ -6,7 +6,6 @@ export function DonateModal({fundId}) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
-        console.log("handleShow called");
         setShow(true);
       };
 
