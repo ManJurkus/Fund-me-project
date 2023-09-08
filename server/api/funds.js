@@ -116,9 +116,29 @@ funds.put('/:fundId', async (req, res) => {
 funds.get('/', async (req, res) => {
     const role = req.user.role;
     let selectQuery = '';
+    console.log(role);
+
 
     if (role === 'admin') {
         selectQuery = `SELECT * FROM funds;`;
+    } else if (role === 'public') {
+        selectQuery = `SELECT * FROM funds WHERE is_blocked_fund = 2;`;
+
+        try {
+            const selectRes = await connection.execute(selectQuery);
+            const fundslist = selectRes[0];
+    
+            return res.status(200).json({
+                status: 'ok',
+                list: fundslist,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 'err',
+                msg: 'GET: Funds (Public) API - server error.',
+            });
+        }
+
     } else if (role === 'user') {
         selectQuery = `SELECT * FROM funds WHERE user_id = ?;`;
     } else {

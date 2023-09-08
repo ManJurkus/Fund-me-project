@@ -25,6 +25,7 @@ async function setupDb() {
         await tokensTable(connection);
         await blockTable(connection);
         await fundsTable(connection);
+        await donationTable(connection);
         // await carTypesTable(connection);
         // await steeringWheelTable(connection);
         // await carsTable(connection);
@@ -32,6 +33,10 @@ async function setupDb() {
         // Uzpildome informacija
         await generateRoles(connection);
         await generateUsers(connection);
+        await generateBlock(connection);
+        await generateFunds(connection);
+        
+        
         // await generateCarTypes(connection);
         // await generateSteeringWheel(connection);
     }
@@ -101,7 +106,7 @@ async function blockTable(db) {
             id int(2) NOT NULL AUTO_INCREMENT,
             status varchar(10) NOT NULL,
             PRIMARY KEY (id)
-          ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`;
+          ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`;
         await db.execute(sql);
     } catch (error) {
         console.log('Nepavyko sukurti "roles" lenteles');
@@ -129,6 +134,26 @@ async function fundsTable(db) {
         await db.execute(sql);
     } catch (error) {
         console.log('Nepavyko sukurti "roles" lenteles');
+        console.log(error);
+        throw error;
+    }
+}
+
+async function donationTable(db) {
+    try {
+        const sql = `CREATE TABLE donation (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            fundId int(10) NOT NULL,
+            name varchar(50) NOT NULL,
+            donation int(10) NOT NULL,
+            created timestamp NOT NULL DEFAULT current_timestamp(),
+            PRIMARY KEY (id),
+            KEY fundId (fundId),
+            CONSTRAINT donation_ibfk_1 FOREIGN KEY (fundId) REFERENCES funds (id)
+          ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`;
+        await db.execute(sql);
+    } catch (error) {
+        console.log('Nepavyko sukurti "donation" lenteles');
         console.log(error);
         throw error;
     }
@@ -219,6 +244,36 @@ async function generateUsers(db) {
         throw error;
     }
 }
+
+async function generateBlock(db) {
+    try {
+        const sql = `INSERT INTO block ( status)
+                    VALUES ('Pending'),
+                        ('Active'),
+                        ('Bloked');`;
+        await db.execute(sql);
+    } catch (error) {
+        console.log('Nepavyko sugeneruoti "roles" lenteles turinio');
+        console.log(error);
+        throw error;
+    }
+}
+
+async function generateFunds(db) {
+    try {
+        const sql = `INSERT INTO funds (user_id, title, fundText, fundSum, is_blocked_fund, image)
+                    VALUES ('2', 'Kaciukas Nerangutis', 'Kaciukui reikia operacijos istraukti galva is batono', '500', '2', 'http://localhost:3001/images/fund/breading-cats-q013.jpg'),
+                    ('2', 'Kaciukas Pilkutis', 'Mielas kaciukas, seimininkas nori nusipirkti suni', '1000', '2', 'http://localhost:3001/images/fund/Adorable-animal-cat-20787.jpg'),
+                    ('3', 'Suo Karstytojas', 'Paaukokite suniukui!', '200', '2', 'http://localhost:3001/images/fund/975504278_bef1c08be4_b.jpg'),
+                    ('3', 'Keistas suo', 'Suniui reikia naujos lovos', '400', '2', 'http://localhost:3001/images/fund/images.jpg');`;
+        await db.execute(sql);
+    } catch (error) {
+        console.log('Nepavyko sugeneruoti "roles" lenteles turinio');
+        console.log(error);
+        throw error;
+    }
+}
+
 
 // async function generateCarTypes(db) {
 //     const carTypes = ['SUV', 'Sedan', 'Hatchback'];

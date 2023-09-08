@@ -30,6 +30,7 @@ function App() {
               <Route index path='/' element={<Home />} />
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/funds/view/:id' element={<FundPage />} />
             </Route>
 
             <Route Component={UserLayout} >
@@ -37,7 +38,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/funds' element={<Funds />} />
               <Route path='/funds/new' element={<AddFund />} />
-              <Route path='/funds/view/:id' element={<FundPage />} />
+              
 
               {/* <Route path='/movies' element={<Movies />} />
               <Route path='/movies/add' element={<AddMovie />} /> */}

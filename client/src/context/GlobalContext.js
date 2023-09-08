@@ -44,7 +44,6 @@ export const ContextWrapper = (props) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.status === 'ok' && data.user) {
                     setLoginStatus(true);
                     setRole(data.user.role);
@@ -123,8 +122,6 @@ export const ContextWrapper = (props) => {
     }
 
     function changeFundStatus(fundId, newStatus) {
-        console.log('keiciamas');
-        console.log(fundId, newStatus);
         setFunds(pre => pre.map(fund =>
             fund.id === fundId ? { ...fund, is_blocked_fund: newStatus } : fund
         ));
