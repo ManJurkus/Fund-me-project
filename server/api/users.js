@@ -5,7 +5,7 @@ export const users = express.Router();
 
 users.get('/', async (req, res) => {
     try {
-        const selectQuery = `SELECT users.fullname, users.email, users.is_blocked, users.created, roles.role 
+        const selectQuery = `SELECT users.username, users.email, users.is_blocked, users.created, roles.role 
                             FROM users INNER JOIN roles ON roles.id = users.role_id;`;
         const selectRes = await connection.execute(selectQuery);
         const users = selectRes[0];

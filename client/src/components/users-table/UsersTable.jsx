@@ -80,7 +80,7 @@ export function UsersTable() {
                         users.map((user, idx) => (
                             <tr key={user.email}>
                                 <td>{idx + 1}</td>
-                                <td>{user.fullname}</td>
+                                <td>{user.username}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>{user.is_blocked

@@ -8,6 +8,7 @@ import { upload } from './upload.js';
 import { donation } from './donation.js';
 import { fundsPublic } from './fundsPublic.js';
 import { fundReceived } from './fundReceived.js';
+import { users } from './users.js';
 
 
 export const api = express.Router();
@@ -26,3 +27,4 @@ api.use('/fundsPublic', fundsPublic);
 api.use('/fundReceived', fundReceived);
 api.use('/upload', upload);
 api.use('/donation', donation);
+api.use('/users', users);
