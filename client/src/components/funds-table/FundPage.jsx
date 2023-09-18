@@ -18,7 +18,6 @@ export function FundPage() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 const filteredFund = data.list.filter(fund => fund.id === parseInt(id, 10));
                 if (filteredFund.length === 1) {
                     setExactFund(filteredFund[0]);

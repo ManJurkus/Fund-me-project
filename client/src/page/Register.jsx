@@ -35,9 +35,13 @@ export function Register() {
 
     function isValidUsername() {
         const minUsernameSize = 2;
+        const maxUsernameSize = 50;
 
         if (username.length < minUsernameSize) {
             setUsernameErr(`Username too short. Minimum ${minUsernameSize} symbols required.`);
+            setUsernameValid(false);
+        } else if (username.length > maxUsernameSize) {
+            setUsernameErr(`Username too long. Maximum ${maxUsernameSize} symbols required.`);
             setUsernameValid(false);
         } else {
             setUsernameErr(false);
@@ -47,9 +51,26 @@ export function Register() {
 
     function isValidEmail() {
         const minEmailSize = 6;
+        const maxEmailSize = 50;
+        const atSymbolCount = email.split('@').length - 1;
+        const atSymbol = email.indexOf('@');
+        const dotSymbol = email.lastIndexOf('.');
+
 
         if (email.length < minEmailSize) {
             setEmailErr(`Email too short. Minimum ${minEmailSize} symbols required.`);
+            setEmailValid(false);
+        } else if (email.length > maxEmailSize) {
+            setEmailErr(`Email too short. Maximum ${maxEmailSize} symbols required.`);
+            setEmailValid(false);
+        } else if (!email.includes('@')) {
+            setEmailErr(`The "@" symbol is missing.`);
+            setEmailValid(false);
+        } else if (atSymbolCount > 1) {
+            setEmailErr(`Only 1 "@" character is allowed.`);
+            setEmailValid(false);
+        } else if (atSymbol > dotSymbol - 3 || dotSymbol === -1) {
+            setEmailErr(`Invalid email format, example: example@example.com`);
             setEmailValid(false);
         } else {
             setEmailErr(false);
@@ -59,11 +80,15 @@ export function Register() {
 
     function isValidPassword() {
         const minPassSize = 6;
+        const maxPassSize = 100;
 
         if (pass.length < minPassSize) {
             setPassErr(`Password too short. Minimum ${minPassSize} symbols required.`);
             setPassValid(false);
-        } else {
+        }  else if (pass.length > maxPassSize) {
+            setPassErr(`Password too ling. Maximum ${maxPassSize} symbols required.`);
+            setPassValid(false);
+        }   else {
             setPassErr(false);
             setPassValid(true);
         }

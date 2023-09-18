@@ -31,6 +31,7 @@ export function Header() {
 
     const adminLinks = <>
         <li className="nav-item"><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
+        <li className="nav-item"><Link to="/users" className="btn btn-outline-primary me-2">Users</Link></li>
         <li className="nav-item"><Link to="/funds" className="nav-link">Funds</Link></li>
         <li className="nav-item"><button onClick={logMeOut} className="nav-link" type="button">Logout</button></li>
     </>;

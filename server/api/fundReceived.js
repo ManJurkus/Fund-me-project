@@ -6,8 +6,6 @@ export const fundReceived = express.Router();
 
 fundReceived.get('/', async (req, res) => {
 
-    console.log('veikia');
-
         const selectQuery = `SELECT
                             f.id AS fund_id,
                             f.user_id AS fund_user_id,
@@ -25,8 +23,6 @@ fundReceived.get('/', async (req, res) => {
         try {
             const selectRes = await connection.execute(selectQuery);
             const fundslist = selectRes[0];
-
-            console.log(fundslist);
     
             return res.status(200).json({
                 status: 'ok',

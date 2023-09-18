@@ -5,10 +5,8 @@ import './PublicFundsTable.css';
 import defaultImage from '../../assets/preview.png';
 
 export function PublicFundsTable() {
-    const { fundsPublic, updateFundsPublic } = useContext(GlobalContext);
+    // const { fundsPublic, updateFundsPublic } = useContext(GlobalContext);
     const [fundReceived, setFundReceived ]  = useState([]);
-
-    console.log(fundReceived);
 
     useEffect(() => {
         fetch('http://localhost:3001/api/fundReceived/', {
@@ -20,7 +18,6 @@ export function PublicFundsTable() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.status === 'ok') {
                     setFundReceived(data.list)
                 }
@@ -28,22 +25,22 @@ export function PublicFundsTable() {
             .catch(console.error);
     }, []);
 
-    useEffect(() => {
-        fetch('http://localhost:3001/api/fundsPublic/', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            },
-            credentials: 'include',
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'ok') {
-                    updateFundsPublic(data.list);
-                }
-            })
-            .catch(console.error);
-    }, []);
+    // useEffect(() => {
+    //     fetch('http://localhost:3001/api/fundsPublic/', {
+    //         method: 'GET',
+    //         headers: {
+    //             Accept: 'application/json',
+    //         },
+    //         credentials: 'include',
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.status === 'ok') {
+    //                 updateFundsPublic(data.list);
+    //             }
+    //         })
+    //         .catch(console.error);
+    // }, []);
 
     return (
     

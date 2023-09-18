@@ -1,0 +1,36 @@
+-------------------------------------
+
+npm init -y
+npm i npm-run-all
+mkdir server client
+
+---------------------
+i client instaliuotis:
+npm i react-router-dom react-icons bootstrap
+
+sukurti scr folderi
+src susikurti folderius:
+mkdir assets components context css layout lib page
+
+
+
+
+i index.js sukelt boostrap.css faila
+import '../node_modules/bootstrap/dist/css/bootstrap.css'
+
+-----------------------------
+i server instaliuotis:
+npm init -y
+npm i express cors helmet nodemon body-parser mysql2 multer cookie-parser dotenv
+mkdir api lib public
+
+serverio package.json
+"dev": "nodemon",
+"type": "module",
+sukurti index.js faila
+
+tevinaiam package.json
+"dev": "npm-run-all --parallel client server",
+"client" : "npm --prefix ./client/ run start",
+"server" : "npm --prefix ./server/ run dev",
+

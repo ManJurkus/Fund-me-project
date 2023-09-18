@@ -10,6 +10,7 @@ import { Dashboard } from './page/dashboard/Dashboard';
 import { Funds } from './page/funds/Funds';
 import { AddFund } from './page/funds/AddFund';
 import { FundPage } from './components/funds-table/FundPage';
+import { Users } from './page/users/Users';
 
 
 // import { Register } from './pages/Register';
@@ -38,6 +39,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/funds' element={<Funds />} />
               <Route path='/funds/new' element={<AddFund />} />
+              <Route path='/users' element={<Users />}></Route>
               
 
               {/* <Route path='/movies' element={<Movies />} />
