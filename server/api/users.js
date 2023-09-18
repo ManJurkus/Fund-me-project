@@ -26,6 +26,8 @@ users.put('/:email', async (req, res) => {
     const { email } = req.params;
     const { newStatus } = req.body;
 
+    console.log(newStatus);
+
     if (!email || newStatus === undefined) {
         return res.status(400).json({
             status: 'err',

@@ -53,9 +53,6 @@ export function Register() {
         const minEmailSize = 6;
         const maxEmailSize = 50;
         const atSymbolCount = email.split('@').length - 1;
-        const atSymbol = email.indexOf('@');
-        const dotSymbol = email.lastIndexOf('.');
-
 
         if (email.length < minEmailSize) {
             setEmailErr(`Email too short. Minimum ${minEmailSize} symbols required.`);
@@ -68,9 +65,6 @@ export function Register() {
             setEmailValid(false);
         } else if (atSymbolCount > 1) {
             setEmailErr(`Only 1 "@" character is allowed.`);
-            setEmailValid(false);
-        } else if (atSymbol > dotSymbol - 3 || dotSymbol === -1) {
-            setEmailErr(`Invalid email format, example: example@example.com`);
             setEmailValid(false);
         } else {
             setEmailErr(false);

@@ -77,6 +77,8 @@ funds.post('/', async (req, res) => {
 funds.put('/:fundId', async (req, res) => {
     const { fundId } = req.params;
     const { newStatus } = req.body;
+    console.log(fundId);
+    console.log(newStatus);
 
     if (!fundId || !newStatus) {
         return res.status(400).json({
@@ -118,13 +120,17 @@ funds.get('/', async (req, res) => {
     let selectQuery = '';
 
     if (role === 'admin') {
-        selectQuery = `SELECT * FROM funds;`;
+        selectQuery = `SELECT funds.id, funds.user_id, funds.title, funds.fundText,                  funds.fundSum,        block.status, funds.image
+                        FROM funds
+                        INNER JOIN block ON block.id = funds.is_blocked_fund;`;
     } else if (role === 'public') {
         selectQuery = `SELECT * FROM funds WHERE is_blocked_fund = 2;`;
 
         try {
             const selectRes = await connection.execute(selectQuery);
             const fundslist = selectRes[0];
+
+            console.log(fundslist);
     
             return res.status(200).json({
                 status: 'ok',

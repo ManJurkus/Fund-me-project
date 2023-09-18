@@ -2,9 +2,11 @@ import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../context/GlobalContext';
 
-export function FundsTable() {
+export function FundsTable({filterStatus}) {
     const { role, funds, updateFunds, deleteFund, changeFundStatus } = useContext(GlobalContext);
 
+    console.log(funds);
+    
     useEffect(() => {
         fetch('http://localhost:3001/api/funds/', {
             method: 'GET',
@@ -99,8 +101,7 @@ export function FundsTable() {
                 <tbody>
                     {
                         funds
-                            // .filter(car => filterCarType === 'All' ? true : car.carType === filterCarType)
-                            // .filter(car => filterTitle === '' ? true : car.title.toLowerCase().includes(filterTitle))
+                            .filter(status => filterStatus === 'All' ? true : status.status === filterStatus)
                             .map((fund, idx) => (
                                 <tr key={fund.title + idx}>
                                     <td>{idx + 1}</td>
@@ -111,11 +112,11 @@ export function FundsTable() {
                                     <td>{fund.fundSum}</td>
                                     <td >
                                         {
-                                            fund.is_blocked_fund === 1 ? (
+                                            fund.status === 'Pending' ? (
                                                 <div className="badge text-bg-warning rounded-pill">Pending</div>
-                                            ) : fund.is_blocked_fund === 2 ? (
+                                            ) : fund.status === 'Active'? (
                                                 <div className="badge text-bg-success rounded-pill">Active</div>
-                                            ) : fund.is_blocked_fund === 3 ? (
+                                            ) : fund.status === 'Bloked' ? (
                                                 <div className="badge text-bg-danger rounded-pill">Blocked</div>
                                             ) : null 
                                         }

@@ -9,6 +9,7 @@ import { donation } from './donation.js';
 import { fundsPublic } from './fundsPublic.js';
 import { fundReceived } from './fundReceived.js';
 import { users } from './users.js';
+import { fundsStatus } from './fundsStatus.js';
 
 
 export const api = express.Router();
@@ -28,3 +29,4 @@ api.use('/fundReceived', fundReceived);
 api.use('/upload', upload);
 api.use('/donation', donation);
 api.use('/users', users);
+api.use('/fundsStatus', fundsStatus);

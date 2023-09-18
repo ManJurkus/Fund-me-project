@@ -39,11 +39,9 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/funds' element={<Funds />} />
               <Route path='/funds/new' element={<AddFund />} />
-              <Route path='/users' element={<Users />}></Route>
+              <Route path='/users' element={<Users />}/>
               
 
-              {/* <Route path='/movies' element={<Movies />} />
-              <Route path='/movies/add' element={<AddMovie />} /> */}
             </Route>
 
             <Route Component={BasicLayout}>
